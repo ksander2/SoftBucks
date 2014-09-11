@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SoftBucksBase.Models.Bid>
+@{
+    ViewBag.Title = "MenuBids";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/WorkSpace")
+@Styles.Render("~/Content/JqUi")
+@Scripts.Render("~/bundles/jquery-ui")
+
+<script>
+    $(document).ready(function () {
+
+        $.ajaxSetup({ cache: false });
+
+        $(".viewDialog").on("click", function (e) {
+            e.preventDefault();
+
+            $("<div></div>")
+                .addClass("dialog")
+                .appendTo("body")
+                .dialog({
+                    autoOpen: true,
+                    modal: false,
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $(this).remove() }
+                   
+                })
+                .load(this.href);
+        });
+        $(".close").on("click", function (e) {
+            e.preventDefault();
+            $(this).closest(".dialog").dialog("close");
+        });
+        
+    });
+</script>
+
+<div id="container">
+    <div id="header">
+        <a href='@Url.Action("Index")'> <img src="~/images/logo.png" /> </a>
+    </div> 
+    <h4>Заказы: </h4>
+    <table>
+        <tr>
+            <th>Дата</th>
+            <th>Комментарий </th>
+            <th>Стоимость</th>
+            <th>Статус</th>
+            <th></th>
+            <th></th>
+</tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusBid.BidStatus)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Удалить", "DeleteBid", new { id = item.Id })
+                </td>
+                <td>
+                    @{
+                        if(item.StatusId==0) 
+                        { 
+                             @Html.ActionLink("Оплатить", "CreatePayment", new { BidId = item.Id }, new { @class = "viewDialog", data_dialog_title = "Оплата" })
+                       
+                    }
+                    }
+                
+                </td>
+            </tr>
+        }
+    </table>
+    <hr align="left" width="500" size="4" color="#ff9900" />
+    @Html.ActionLink("На главную", "Index")
+    </div>
+
+

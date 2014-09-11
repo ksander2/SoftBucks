@@ -1,0 +1,117 @@
+﻿    #Content {
+        margin-left: 100px;
+    }
+     #info {
+        margin-left: 100px;
+     
+    }
+
+  .feedback { font-size: 1.4em; }
+  .selectable .ui-selecting { background: #FECA40; }
+  .selectable .ui-selected { background: #F39814; color: white; }
+  .selectable { list-style-type: none; margin: 0; padding: 0; width: 350px; }
+  .selectable li { margin: 3px; padding: 0.4em; font-size: 1; height: 30px; }
+  .currency  { float: right }
+  .bev-price  { float: right }
+  .Condiment-price  { float: right }
+  .invis {  visibility: hidden;}
+   
+  #list1 {  float:left; position:relative }
+
+
+
+body  {
+    color: #000000;
+}
+.cbody #container { 
+  background: #FFFFFF;
+  position: relative; 
+  width: 980px; 
+  margin: 0 auto;
+  text-align: left; 
+}
+
+.cbody #maintable { 
+  width: 700px 
+}
+.cbody #header {
+  height: 100px;
+  padding: 0 10px 0 20px; 
+  background-color: #FFFFFF;
+}
+.cbody #sidebar1 {
+  position: absolute;
+  top: 60px; 
+  left: 0; 
+  width: 150px; 
+  padding: 15px 10px 15px 20px; 
+  background-color: #FFFFFF;
+  
+}
+.cbody #sidebar2 {
+  position: absolute;
+
+  top: 60px; 
+  right: 0; 
+  width: 260px; 
+  padding: 15px 10px 15px 20px; 
+  background-color: #FFFFFF;
+     border: solid 1px black;
+     border-radius:6px; 
+    -webkit-border-radius:6px; 
+    -moz-border-radius:5px; 
+    -khtml-border-radius:10px;
+}
+.cbody #mainContent { 
+  margin: 0px; 
+  padding: 0 10px; 
+}
+.cbody #footer {
+  padding: 250px 10px 0 20px;
+  background-color: #ffffff;
+}
+
+.cbody #InBasket {
+    width:200px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(
+		top,
+		#fff3db 0%,
+		#ffc821 25%,
+		#ff3c00);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#fff3db),
+		color-stop(0.25, #ffc821),
+		to(#ff3c00));
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #b85f00;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0),
+		inset 0px -1px 0px rgba(255,255,255,0);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0),
+		inset 0px -1px 0px rgba(255,255,255,0);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0),
+		inset 0px -1px 0px rgba(255,255,255,0);
+	text-shadow:
+		0px 0px 0px rgba(000,000,000,0),
+		0px 0px 0px rgba(255,255,255,0);
+}
+.style-glow
+{
+    color: #808080;
+    font-weight: 700;
+    font-size: 18px;
+}
+.style-glow:hover
+{
+    text-shadow: 0 0 15px #FFFFFF;
+    transform: scale(1.05);
+}

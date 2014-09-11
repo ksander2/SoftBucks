@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SoftBucksBase.Models.Checkout>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Styles.Render("~/Content/WorkSpace")
+
+<div id="container">
+    <div id="header">
+        <a href='@Url.Action("Index")'> <img src="~/images/logo.png" /> </a>
+    </div> 
+   
+    <h4>Корзина:</h4>
+    @Html.ValidationSummary(true)
+    <table>
+        <tr>
+            <th>Заказ</th>
+            <th>Стоимость</th>
+
+            <th>Действие</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AllCost)
+                   
+                </td>
+
+                <td>
+
+                    @Html.ActionLink("Удалить", "DeleteCheckout", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <hr align="left" width="500" size="4" color="#ff9900" />
+    <h4>Коментарий: </h4>
+    @{using (Html.BeginForm("CreateBid", "Home", FormMethod.Post))
+    {
+        @Html.TextArea("comment", new { id = "tarea" });
+        <div>
+            <hr align="left" width="500" size="4" color="#ff9900" />
+            @Html.ActionLink("На главную", "Index") <input type="submit" value="Заказать" style="width:96px;height:25px;" />
+        </div>
+    }
+    }
+
+</div>

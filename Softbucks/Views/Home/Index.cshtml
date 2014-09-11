@@ -1,0 +1,162 @@
+﻿@model Softbucks.Models.MainViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/JqUi")
+@Scripts.Render("~/bundles/jquery-ui")
+
+@Styles.Render("~/Content/main")
+
+
+<script>
+    $(document).ajaxError(function (e, xhr) {
+        if (xhr.status == 401)
+            window.location = "/Account/Login";
+        else if (xhr.status == 403)
+            alert("You have no enough permissions to request this resource.");
+    });
+    $(document).ready(function () {
+
+        var masNameCondiment;
+        var bId;
+        var user = {
+            function_param: masNameCondiment
+
+        }
+        $("#CondimentSelect").selectable({
+            stop: function () {
+                masNameCondiment = [];
+                var CondimentName = $("#CNames").empty();
+                var PriceCond = $("#price-cond").empty();
+                var allCost = 0;
+                $(".ui-selected", this).each(function () {
+                    allCost += new Number($(".Condiment-price", this).text());
+                    var condName = $(".Condiment-name", this).text();
+                    var v = $(".invis", this).text();
+                    if (v != "") masNameCondiment.push(new Number(v));
+                    CondimentName.append(condName + " ");
+                });
+                PriceCond.text(allCost);
+            }
+
+        });
+
+        $('#InBasket').click(function (e) {
+            $.ajax({
+                type: 'POST',
+                traditional: true,
+                url: '@Url.Action("CreateCheckout")',
+                data: { ListIdComdiments: masNameCondiment, bevId: bId },
+                success: function (data) { $("#countchecks").text(data); }
+
+            });
+        });
+
+        $("#BeverageSelect").selectable({
+            stop: function () {
+                var BevName = $(".ui-selected .bev-name").text();
+                $("#BeverageName").text(BevName);
+                var BevPrice = $(".ui-selected .bev-price").text();
+                bId = new Number($(" .ui-selected .invis", this).text());
+                $("#price-coffe").text(BevPrice);
+            },
+            selecting: function (event, ui) {
+                if ($("#BeverageSelect .ui-selected, .ui-selecting").length > 1) {
+                    $(ui.selecting).removeClass("ui-selecting");
+                }
+            }
+        });
+
+    });
+</script>
+@helper RendBevList()
+{
+    WriteLiteral("<ul id =\"BeverageSelect\" class=\"selectable\" >");
+    foreach (var c in Model.BeverageCollection)
+    {
+        WriteLiteral("<li class=\"ui-widget-content\">");
+        WriteLiteral("<span class = \"invis\">" + c.Id + "</span> "
+            + "<span class = \"bev-name\">" + c.Name + "</span> "
+            + "<span class = \"currency\">&nbsp; р.</span>"
+            + "<span class = \"bev-price\">" + c.Cost + "</span>");
+
+
+
+        WriteLiteral("</li>");
+    }
+    WriteLiteral("</ul>");
+}
+
+@helper RendCondimentList()
+{
+    WriteLiteral("<ul id =\"CondimentSelect\" class=\"selectable\" >");
+    foreach (var c in Model.CondimentCollection)
+    {
+        WriteLiteral("<li class=\"ui-widget-content\">");
+        WriteLiteral("<span class = \"invis\">" + c.Id + "</span> "
+            + "<span class = \"Condiment-name\">" + c.Name + "</span> "
+            + "<span class = \"currency\">&nbsp; р.</span>"
+            + "<span class = \"Condiment-price\">" + c.Cost + "</span>");
+
+
+        WriteLiteral("</li>");
+    }
+    WriteLiteral("</ul>");
+}
+
+   
+
+<div id="container">
+    <div id="header">
+        <a href='@Url.Action("Index")'> <img src="~/images/logo.png" /> </a>
+    </div> 
+
+    <div id="sidebar2">
+        <div id="1info">
+
+           
+
+                <div>
+                    <p class="feedback">@Html.ActionLink("Корзина: ", "MenuCheckouts", null, new { @class = "style-glow" }) <span id="countchecks">@Model.CountChecks р.</span> </p>
+                </div>
+
+            <hr width="auto" size="4" color="#ff9900" />
+            
+
+            <div>
+                <p class="feedback">
+                    <span>Стоимость кофе:</span> <span id="price-coffe">0</span>
+                </p>
+            </div>
+
+            <div>
+                <p class="feedback">
+                    <span>Стоимость добавок:</span> <span id="price-cond">0</span>
+                </p>
+            </div>
+            <input id="InBasket" type="submit" value="В корзину">
+
+            <hr width="auto" size="4" color="#ff9900" />
+           <p class="feedback">
+               
+                    @Html.ActionLink("Мои заказы: ", "MenuBids", null, new { @class = "style-glow" })
+
+                    <span>@Model.CountBids</span>
+</p>
+        </div>
+        </div>
+
+    </div>
+    <div id="mainContent">
+        <table id="maintable">
+            <tr>
+                <td valign="top"> <div class="list1">@RendBevList() </div></td>
+                <td valign="top"> <div class="list1">@RendCondimentList()</div> </td>
+                
+                </table>
+    </div>
+    <div id="footer">* - для мнжественного заказа добавок зажмите Ctrl</div>
+
+
